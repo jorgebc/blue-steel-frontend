@@ -1,8 +1,8 @@
 {
-  "name": "remix-template-fly",
+  "name": "blue-steel-frontend",
   "private": true,
-  "description": "",
-  "license": "",
+  "description": "Blue steel frontend",
+  "license": "MIT",
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
