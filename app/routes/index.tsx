@@ -25,7 +25,7 @@ export default function Screen() {
       </Form>
 
       <hr />
-      <h1>Welcome to blue steel</h1>
+      <h1 className="text-6xl font-bold text-red-700">Welcome to blue steel</h1>
 
       <pre>
         <code>{JSON.stringify(profile, null, 2)}</code>
