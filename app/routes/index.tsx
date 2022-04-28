@@ -2,10 +2,10 @@ import type {LoaderFunction} from '@remix-run/node'
 import type {Auth0Profile} from 'remix-auth-auth0'
 
 import {json} from '@remix-run/node'
-import {Form, useLoaderData, useCatch} from '@remix-run/react'
+import {useLoaderData, useCatch} from '@remix-run/react'
 import {Fragment} from 'react'
 import {Disclosure, Menu, Transition} from '@headlessui/react'
-import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
+import {MenuIcon, XIcon} from '@heroicons/react/outline'
 
 import {auth} from '~/utils/auth.server'
 
