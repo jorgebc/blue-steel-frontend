@@ -6,3 +6,5 @@ node_modules
 .env
 .history/
 .netlify/
+
+/app/tailwind.css

@@ -1,4 +1,4 @@
-import type {ActionFunction} from '@remix-run/node'
+import type {ActionFunction, LoaderFunction} from '@remix-run/node'
 import {redirect} from '@remix-run/node'
 
 import {destroySession, getSession} from '~/utils/auth.server'
@@ -8,7 +8,11 @@ import {
   AUTH0_RETURN_TO_URL,
 } from '~/constants/env.server'
 
-export const action: ActionFunction = async ({request}) => {
+// support Form, Link and redirects to /login
+export let action: ActionFunction = ({request}) => logout(request)
+export let loader: LoaderFunction = ({request}) => logout(request)
+
+async function logout(request: Request) {
   const session = await getSession(request.headers.get('Cookie'))
   const logoutURL = new URL(AUTH0_LOGOUT_URL)
 
