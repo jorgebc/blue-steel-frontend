@@ -1,0 +1,15 @@
+overwrite: true
+schema:
+  - http://localhost:8080/graphql:
+      headers:
+        Authorization: 'Bearer token'
+
+generates:
+  app/generated/types.ts:
+    config:
+      avoidOptionals: true
+      useImplementingTypes: true
+      useTypeImports: true
+    plugins:
+      - typescript
+      - typescript-operations
