@@ -1,4 +1,8 @@
-import type {LinksFunction, MetaFunction} from '@remix-run/node'
+import type {
+  ErrorBoundaryComponent,
+  LinksFunction,
+  MetaFunction,
+} from '@remix-run/node'
 import {
   Links,
   LiveReload,
@@ -20,16 +24,31 @@ export const meta: MetaFunction = () => ({
 
 export default function App() {
   return (
-    <html lang="es">
+    <html lang="es" className="h-full">
       <head>
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="h-full">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+      </body>
+    </html>
+  )
+}
+
+export const ErrorBoundary: ErrorBoundaryComponent = ({error}) => {
+  return (
+    <html lang="es" className="h-full">
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body className="h-full">
+        <Scripts />
       </body>
     </html>
   )

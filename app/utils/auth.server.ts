@@ -9,9 +9,9 @@ import {
   AUTH0_CLIENT_ID,
   AUTH0_CLIENT_SECRET,
   AUTH0_DOMAIN,
-  isProduction,
   SECRETS,
 } from '~/constants/env.server'
+import {isProduction} from '.'
 
 const sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -24,7 +24,12 @@ const sessionStorage = createCookieSessionStorage({
   },
 })
 
-export const auth = new Authenticator<Auth0Profile>(sessionStorage)
+interface AuthenticationData {
+  profile: Auth0Profile
+  accessToken: string
+}
+
+export const auth = new Authenticator<AuthenticationData>(sessionStorage)
 
 const auth0Strategy = new Auth0Strategy(
   {
@@ -33,17 +38,22 @@ const auth0Strategy = new Auth0Strategy(
     clientSecret: AUTH0_CLIENT_SECRET,
     domain: AUTH0_DOMAIN,
   },
-  async ({profile}) => {
-    //
-    // Use the returned information to process or write to the DB.
-    //
-    return profile
+  async ({profile, accessToken}) => {
+    return {profile, accessToken}
   },
 )
 
 auth.use(auth0Strategy)
 
 export const {getSession, commitSession, destroySession} = sessionStorage
+
+/**
+ * Get the access token from the session
+ */
+export const getAccessToken = async (request: Request): Promise<string> => {
+  const session = await getSession(request.headers.get('Cookie'))
+  return session.data.user.accessToken
+}
 
 export const returnToCookie = createCookie('return-to', {
   path: '/',
