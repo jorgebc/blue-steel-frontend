@@ -1,3 +1,5 @@
+import {isProduction} from '~/utils'
+
 /**
  * Auth0
  */
@@ -35,7 +37,3 @@ export const SECRETS = isProduction()
 export const GRAPHQL_API_URL = isProduction()
   ? process.env.GRAPHQL_API_URL!
   : 'http://localhost:8080/graphql'
-
-export function isProduction() {
-  return process.env.NODE_ENV === 'production'
-}
