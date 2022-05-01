@@ -1,10 +1,10 @@
 import {GRAPHQL_API_URL} from '~/constants/env.server'
-import {getSession} from './auth.server'
+import {getAccessToken} from './auth.server'
 
 /**
  * Fetch from GraphQL endpoint
  * @param {string} query GraphQL query
- * @param {object} variables GraphQL variables
+ * @param {object} variables Query variables
  */
 export const fetchFromGraphQL = async (
   request: Request,
@@ -12,11 +12,10 @@ export const fetchFromGraphQL = async (
   variables?: Record<string, any>,
 ) => {
   if (!GRAPHQL_API_URL) {
-    throw new Error('GRAPHQL_API is required')
+    throw new Error('GRAPHQL_API_URL is required')
   }
 
-  const session = await getSession(request.headers.get('Cookie'))
-  const accessToken = session.data.user.accessToken
+  const accessToken = await getAccessToken(request)
 
   const body: any = {query}
 

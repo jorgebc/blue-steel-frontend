@@ -47,6 +47,14 @@ auth.use(auth0Strategy)
 
 export const {getSession, commitSession, destroySession} = sessionStorage
 
+/**
+ * Get the access token from the session
+ */
+export const getAccessToken = async (request: Request): Promise<string> => {
+  const session = await getSession(request.headers.get('Cookie'))
+  return session.data.user.accessToken
+}
+
 export const returnToCookie = createCookie('return-to', {
   path: '/',
   httpOnly: true,
