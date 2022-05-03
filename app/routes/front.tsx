@@ -4,25 +4,27 @@ import type {Auth0Profile} from 'remix-auth-auth0'
 import {json} from '@remix-run/node'
 import {Outlet, useLoaderData, useCatch} from '@remix-run/react'
 
-import {auth} from '~/utils/auth.server'
+import {checkAuth} from '~/utils/auth.server'
 import {Nav} from '~/components/front/nav'
-import {ModalError} from '~/components/modal-error-boundary'
+import {ModalError} from '~/components/error/modal-error-boundary'
 
 type LoaderData = {profile: Auth0Profile}
 
 export const loader: LoaderFunction = async ({request}) => {
-  const {profile} = await auth.isAuthenticated(request, {
-    failureRedirect: '/login',
-  })
+  const {profile} = await checkAuth(request)
   return json<LoaderData>({profile})
 }
 
-export default function FrontHome() {
+export default function Front() {
   const {profile} = useLoaderData<LoaderData>()
   return (
     <>
       <Nav profile={profile} />
-      <Outlet />
+      <main>
+        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <Outlet />
+        </div>
+      </main>
     </>
   )
 }

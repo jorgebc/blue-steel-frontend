@@ -12,7 +12,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react'
 
-import {ModalError} from './components/modal-error-boundary'
+import {ModalError} from './components/error/modal-error-boundary'
 
 import tailwind from './tailwind.css'
 
