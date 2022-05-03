@@ -12,6 +12,8 @@ import {
   ScrollRestoration,
 } from '@remix-run/react'
 
+import {ModalError} from './components/modal-error-boundary'
+
 import tailwind from './tailwind.css'
 
 export const links: LinksFunction = () => [{rel: 'stylesheet', href: tailwind}]
@@ -43,11 +45,11 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({error}) => {
   return (
     <html lang="es" className="h-full">
       <head>
-        <title>Oh no!</title>
         <Meta />
         <Links />
       </head>
       <body className="h-full">
+        <ModalError error={error} />
         <Scripts />
       </body>
     </html>

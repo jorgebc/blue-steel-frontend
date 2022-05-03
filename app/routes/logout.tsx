@@ -8,7 +8,7 @@ import {
   AUTH0_RETURN_TO_URL,
 } from '~/constants/env.server'
 
-// support Form, Link and redirects to /login
+// support Form, Link and redirects to /logout
 export let action: ActionFunction = ({request}) => logout(request)
 export let loader: LoaderFunction = ({request}) => logout(request)
 
