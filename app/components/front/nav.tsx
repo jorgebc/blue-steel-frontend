@@ -9,7 +9,7 @@ import {ProfileDropdown} from './profile-dropdown'
 
 const navigation = [
   {name: 'Inicio', href: '/front'},
-  {name: 'Campañas', href: '/campaigns'},
+  {name: 'Campañas', href: 'campaigns'},
 ]
 
 const isSelected = (pathname: string, href: string) => {
