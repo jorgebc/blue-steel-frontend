@@ -1,12 +1,73 @@
 import type {Auth0Profile} from 'remix-auth-auth0'
 
+import {Link, useLocation} from '@remix-run/react'
 import {Disclosure} from '@headlessui/react'
 import {MenuIcon, XIcon} from '@heroicons/react/outline'
 
 import {classNames} from '~/utils'
 import {ProfileDropdown} from './profile-dropdown'
 
-const navigation = [{name: 'Inicio', href: '/', current: true}]
+const navigation = [
+  {name: 'Inicio', href: '/front'},
+  {name: 'Campañas', href: '/campaigns'},
+]
+
+const isSelected = (pathname: string, href: string) => {
+  return href === pathname || pathname.startsWith(`/front/${href}`)
+}
+
+function NavLink({
+  to,
+  label,
+  ...rest
+}: {
+  to: string
+  label: string
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const location = useLocation()
+  const selected = isSelected(location.pathname, to)
+  return (
+    <Link
+      to={to}
+      prefetch="intent"
+      className={classNames(
+        selected
+          ? 'bg-gray-900 text-white'
+          : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+        'rounded-md px-3 py-2 text-sm font-medium',
+      )}
+      aria-current={selected ? 'page' : undefined}
+      {...rest}
+    >
+      {label}
+    </Link>
+  )
+}
+
+function MobileMenuLink({
+  to,
+  ...rest
+}: {
+  to: string
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const location = useLocation()
+  const selected = isSelected(location.pathname, to)
+  return (
+    <Disclosure.Button
+      as={Link}
+      to={to}
+      prefetch="intent"
+      className={classNames(
+        selected
+          ? 'bg-gray-900 text-white'
+          : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+        'block rounded-md px-3 py-2 text-base font-medium',
+      )}
+      aria-current={selected ? 'page' : undefined}
+      {...rest}
+    />
+  )
+}
 
 export function Nav({profile}: {profile: Auth0Profile}) {
   return (
@@ -42,19 +103,9 @@ export function Nav({profile}: {profile: Auth0Profile}) {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map(item => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium',
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
+                      <NavLink key={item.name} to={item.href} label={item.name}>
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
@@ -68,20 +119,9 @@ export function Nav({profile}: {profile: Auth0Profile}) {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map(item => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium',
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
+                <MobileMenuLink key={item.name} to={item.href}>
                   {item.name}
-                </Disclosure.Button>
+                </MobileMenuLink>
               ))}
             </div>
           </Disclosure.Panel>
