@@ -12,8 +12,8 @@ async function login(request: Request) {
 
   try {
     return await auth.authenticate('auth0', request, {
-      successRedirect: returnTo ?? '/',
-      failureRedirect: '/',
+      successRedirect: returnTo ?? '/front',
+      failureRedirect: '/front',
     })
   } catch (error) {
     if (!returnTo) throw error

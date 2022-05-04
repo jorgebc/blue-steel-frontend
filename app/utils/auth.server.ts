@@ -62,3 +62,11 @@ export const returnToCookie = createCookie('return-to', {
   maxAge: 60, // 1 minute because it makes no sense to keep it for a long time
   secure: isProduction(),
 })
+
+export const checkAuth = async (
+  request: Request,
+): Promise<AuthenticationData> => {
+  return await auth.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
+}
