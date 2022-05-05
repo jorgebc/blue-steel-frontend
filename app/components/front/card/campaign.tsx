@@ -1,6 +1,7 @@
 import type {Campaign} from '~/generated/types'
 
 import parse from 'html-react-parser'
+import ShowMoreText from 'react-show-more-text'
 
 export function CampaignCard({campaign}: {campaign: Campaign}) {
   return (
@@ -20,7 +21,19 @@ export function CampaignCard({campaign}: {campaign: Campaign}) {
             {campaign.name}
           </a>
           <span className="mt-2 text-sm text-gray-300">
-            {parse(campaign.description)}
+            <ShowMoreText
+              /* Default options */
+              lines={3}
+              more="Mostrar más"
+              less="Mostrar menos"
+              className="content-css"
+              anchorClass="text-blue-500"
+              expanded={false}
+              // width={280}
+              truncatedEndingComponent={'... '}
+            >
+              {parse(campaign.description)}
+            </ShowMoreText>
           </span>
         </div>
 
@@ -45,5 +58,3 @@ export function CampaignCard({campaign}: {campaign: Campaign}) {
     </div>
   )
 }
-
-//https://s3.amazonaws.com/files.d20.io/images/273771667/ysSt6iwwK95E88nQaZ1_zA/max.jpg?1646346416970
