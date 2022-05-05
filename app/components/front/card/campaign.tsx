@@ -3,6 +3,9 @@ import type {Campaign} from '~/generated/types'
 import parse from 'html-react-parser'
 import ShowMoreText from 'react-show-more-text'
 
+import {toLocalDateTime} from '~/utils/date'
+import {Tooltip} from '~/components/tooltip'
+
 export function CampaignCard({campaign}: {campaign: Campaign}) {
   return (
     <div className="mx-auto max-w-2xl overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-800">
@@ -37,22 +40,28 @@ export function CampaignCard({campaign}: {campaign: Campaign}) {
           </span>
         </div>
 
-        <div className="mt-4">
-          <div className="flex items-center">
+        <span className="mt-2 text-xs text-gray-400">
+          Número de resumenes: {campaign.summaries?.length}
+        </span>
+
+        <div className="mt-2">
+          <Tooltip message="Última modificación">
             <div className="flex items-center">
-              <img
-                className="h-10 rounded-full object-cover"
-                src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
-                alt="Avatar"
-              />
-              <a href="#" className="mx-2 font-semibold text-gray-500">
-                {campaign.auditingMetadata.createdBy.name}
-              </a>
+              <div className="flex items-center">
+                <img
+                  className="h-10 rounded-full object-cover"
+                  src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
+                  alt="Avatar"
+                />
+                <span className="mx-2 font-semibold text-gray-500">
+                  {campaign.auditingMetadata.createdBy.name}
+                </span>
+              </div>
+              <span className="mx-1 text-justify text-xs text-gray-400">
+                {toLocalDateTime(campaign.auditingMetadata.lastModifiedDate)}
+              </span>
             </div>
-            <span className="mx-1 text-justify text-xs text-gray-400">
-              {campaign.auditingMetadata.lastModifiedDate}
-            </span>
-          </div>
+          </Tooltip>
         </div>
       </div>
     </div>
