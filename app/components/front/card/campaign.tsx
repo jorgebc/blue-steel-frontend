@@ -1,5 +1,7 @@
 import type {Campaign} from '~/generated/types'
 
+import parse from 'html-react-parser'
+
 export function CampaignCard({campaign}: {campaign: Campaign}) {
   return (
     <div className="mx-auto max-w-2xl overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-800">
@@ -13,11 +15,13 @@ export function CampaignCard({campaign}: {campaign: Campaign}) {
         <div>
           <a
             href={`campaigns/${campaign.id}`}
-            className="mt-2 block transform text-2xl font-semibold text-white transition-colors duration-200 hover:text-gray-600 hover:underline"
+            className="mt-2 mb-2 block transform text-2xl font-semibold text-white transition-colors duration-200 hover:text-gray-600 hover:underline"
           >
             {campaign.name}
           </a>
-          <p className="mt-2 text-sm text-gray-300">{campaign.description}</p>
+          <span className="mt-2 text-sm text-gray-300">
+            {parse(campaign.description)}
+          </span>
         </div>
 
         <div className="mt-4">

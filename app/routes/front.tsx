@@ -20,7 +20,7 @@ export default function Front() {
   return (
     <>
       <Nav profile={profile} />
-      <main className="bg-gray-600">
+      <main className="h-fit bg-gray-600">
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <Outlet />
         </div>

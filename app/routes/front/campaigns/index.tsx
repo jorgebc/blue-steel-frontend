@@ -20,15 +20,9 @@ export const loader: LoaderFunction = async ({request}) => {
 export default function Campaigns() {
   const {campaigns} = useLoaderData<LoaderData>()
   return (
-    <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
+    <div className="m-4 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
       {campaigns.map(campaign => (
-        <>
-          <CampaignCard campaign={campaign} key={campaign.id} />
-          <CampaignCard campaign={campaign} key={campaign.id} />
-          <CampaignCard campaign={campaign} key={campaign.id} />
-          <CampaignCard campaign={campaign} key={campaign.id} />
-          <CampaignCard campaign={campaign} key={campaign.id} />
-        </>
+        <CampaignCard campaign={campaign} key={campaign.id} />
       ))}
     </div>
   )
