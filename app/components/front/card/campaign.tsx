@@ -25,14 +25,12 @@ export function CampaignCard({campaign}: {campaign: Campaign}) {
           </a>
           <span className="mt-2 text-sm text-gray-300">
             <ShowMoreText
-              /* Default options */
               lines={3}
               more="Mostrar más"
               less="Mostrar menos"
               className="content-css"
               anchorClass="text-blue-500"
               expanded={false}
-              // width={280}
               truncatedEndingComponent={'... '}
             >
               {parse(campaign.description)}
