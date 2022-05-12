@@ -48,7 +48,7 @@ export function CampaignCard({campaign}: {campaign: Campaign}) {
               <div className="flex items-center">
                 <img
                   className="h-10 rounded-full object-cover"
-                  src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
+                  src={campaign.auditingMetadata.lastModifiedDate.imageUrl}
                   alt="Avatar"
                 />
                 <span className="mx-2 font-semibold text-gray-500">

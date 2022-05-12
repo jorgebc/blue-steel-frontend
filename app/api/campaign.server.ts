@@ -18,26 +18,14 @@ const getCampaignsQuery = gql`
           name
           description
           gameDate
-          campaign {
-            id
-            name
-            description
-            imageUrl
-            actual
-            auditingMetadata {
-              creationDate
-              lastModifiedDate
-            }
-            version
-          }
           auditingMetadata {
             createdBy {
-              id
               name
+              imageUrl
             }
             lastModifiedBy {
-              id
               name
+              imageUrl
             }
             creationDate
             lastModifiedDate
