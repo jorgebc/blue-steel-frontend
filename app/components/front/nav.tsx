@@ -1,4 +1,4 @@
-import type {Auth0Profile} from 'remix-auth-auth0'
+import type {User} from '~/generated/types'
 
 import {Link, useLocation} from '@remix-run/react'
 import {Disclosure} from '@headlessui/react'
@@ -69,7 +69,7 @@ function MobileMenuLink({
   )
 }
 
-export function Nav({profile}: {profile: Auth0Profile}) {
+export function Nav({user}: {user: User}) {
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({open}) => (
@@ -111,7 +111,7 @@ export function Nav({profile}: {profile: Auth0Profile}) {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <ProfileDropdown profile={profile} />
+                <ProfileDropdown user={user} />
               </div>
             </div>
           </div>
