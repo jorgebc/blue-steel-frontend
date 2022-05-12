@@ -46,12 +46,12 @@ const getCampaignsQuery = gql`
         }
         auditingMetadata {
           createdBy {
-            id
             name
+            imageUrl
           }
           lastModifiedBy {
-            id
             name
+            imageUrl
           }
           creationDate
           lastModifiedDate
