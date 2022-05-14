@@ -1,5 +1,4 @@
 import type {ErrorBoundaryComponent, LoaderFunction} from '@remix-run/node'
-import type {Auth0Profile} from 'remix-auth-auth0'
 import type {User} from '~/generated/types'
 
 import {json} from '@remix-run/node'
@@ -7,7 +6,7 @@ import {Outlet, useLoaderData, useCatch} from '@remix-run/react'
 
 import {checkAuth} from '~/utils/auth.server'
 import {getUser} from '~/api/user.server'
-import {Nav} from '~/components/front/nav'
+import {Nav} from '~/components/front/nav/nav'
 import {ModalError} from '~/components/error/modal-error-boundary'
 
 type LoaderData = {user: User}
