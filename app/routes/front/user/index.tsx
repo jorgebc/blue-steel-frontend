@@ -10,7 +10,7 @@ import {
 import {json} from '@remix-run/node'
 
 import {checkAuth} from '~/utils/auth.server'
-import {getUser} from '~/api/user.server'
+import {getUser, updateUser} from '~/api/user.server'
 
 type ActionData = {
   formError?: string
@@ -54,6 +54,7 @@ export let action: ActionFunction = async ({
     return {fieldErrors, fields}
   }
 
+  await updateUser(request, fields)
   return {fields}
 }
 
@@ -61,8 +62,8 @@ type LoaderData = {user: User}
 
 export const loader: LoaderFunction = async ({request}) => {
   await checkAuth(request)
-  const user = await getUser(request)
-  return json<LoaderData>({user})
+  const userData = await getUser(request)
+  return json<LoaderData>({user: userData.data.user})
 }
 
 export default function UserForm() {
@@ -75,11 +76,13 @@ export default function UserForm() {
     ? actionData?.fields?.imageUrl
     : user.imageUrl
 
+  const submiting = transition.state === 'submitting'
+
   return (
     <div className="md:grid md:grid-cols-6 md:gap-6">
       <div className="mx-2 mt-5 md:col-span-4 md:col-start-2 md:mt-0">
         <Form method="post">
-          <fieldset disabled={transition.state === 'submitting'}>
+          <fieldset disabled={submiting}>
             <div className="overflow-hidden rounded-md shadow">
               <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                 <div className="grid grid-cols-3 gap-6">
@@ -112,7 +115,7 @@ export default function UserForm() {
                 </div>
 
                 <div className="grid grid-cols-3 gap-6">
-                  <div className="col-span-3 sm:col-span-2">
+                  <div className="col-span-3">
                     <label
                       htmlFor="imageUrl"
                       className="block text-sm font-medium text-gray-700"
@@ -156,9 +159,7 @@ export default function UserForm() {
                   type="submit"
                   className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  {transition.state === 'submitting'
-                    ? 'Actualizando...'
-                    : 'Actualizar'}
+                  {submiting ? 'Actualizando...' : 'Actualizar'}
                 </button>
               </div>
             </div>

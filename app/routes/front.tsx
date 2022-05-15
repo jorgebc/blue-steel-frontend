@@ -13,8 +13,8 @@ type LoaderData = {user: User}
 
 export const loader: LoaderFunction = async ({request}) => {
   await checkAuth(request)
-  const user = await getUser(request)
-  return json<LoaderData>({user})
+  const userData = await getUser(request)
+  return json<LoaderData>({user: userData.data.user})
 }
 
 export default function Front() {

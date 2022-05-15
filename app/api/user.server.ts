@@ -1,34 +1,26 @@
-import type {LoaderFunction} from '@remix-run/node'
 import type {ApolloError} from 'apollo-server-errors'
-import type {User} from '~/generated/types'
+import type {UpdateUserInput, User} from '~/generated/types'
 
-import {json} from '@remix-run/node'
-import {fetchFromGraphQL, gql} from '~/utils/fetchFromGraphql.server'
+import {fetchFromGraphQL} from '~/utils/fetchFromGraphql.server'
+import {getUserQuery, updateUserMutation} from './queries/user-queries.server'
 
-const getUserQuery = gql`
-  query GetUser {
-    getUser {
-      user {
-        name
-        imageUrl
-      }
-    }
-  }
-`
-export type LoaderData = {
+export type UserData = {
   data: {user: User}
   errors?: ApolloError[]
 }
 
-export const loader: LoaderFunction = async ({request}) => {
-  const user = await getUser(request)
-  return json<LoaderData>({
-    data: {user},
-  })
+export const getUser = async (request: Request): Promise<UserData> => {
+  return fetchFromGraphQL(request, getUserQuery)
+    .then(responseData => responseData.data.getUser.user)
+    .then(user => ({data: {user}}))
 }
 
-export const getUser = async (request: Request): Promise<User> => {
-  return fetchFromGraphQL(request, getUserQuery).then(
-    responseData => responseData.data.getUser.user,
-  )
+export const updateUser = async (
+  request: Request,
+  fields: UpdateUserInput,
+): Promise<UserData> => {
+  const input = {input: fields}
+  return fetchFromGraphQL(request, updateUserMutation, input)
+    .then(responseData => responseData.data.updateUser.user)
+    .then(user => ({data: {user}}))
 }

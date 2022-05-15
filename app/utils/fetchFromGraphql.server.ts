@@ -18,7 +18,6 @@ export const fetchFromGraphQL = async (
   const accessToken = await getAccessToken(request)
 
   const body: any = {query}
-
   if (variables) body.variables = variables
 
   return fetch(GRAPHQL_API_URL, {
