@@ -6,12 +6,21 @@ import {Menu, Transition} from '@headlessui/react'
 
 import {classNames} from '~/utils'
 
-function ProfileMenuItem({to, label}: {label: String; to: string}) {
+function ProfileMenuItem({
+  to,
+  prefetch,
+  label,
+}: {
+  to: string
+  prefetch?: boolean
+  label: string
+}) {
   return (
     <Menu.Item>
       {({active}) => (
         <Link
           to={to}
+          prefetch={prefetch ? 'intent' : 'none'}
           className={classNames(
             active ? 'bg-gray-100' : '',
             'group flex w-full items-center rounded-md px-2 py-2 text-sm',
@@ -48,8 +57,8 @@ export function ProfileDropdown({user}: {user: User}) {
       >
         <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-1 py-1 ">
-            <ProfileMenuItem to="/front/user" label="Usuario" />
-            <ProfileMenuItem to="/back" label="Backend" />
+            <ProfileMenuItem to="/front/user" prefetch label="Perfil" />
+            <ProfileMenuItem to="/back" prefetch label="Backend" />
             <ProfileMenuItem to="/logout" label="Salir" />
           </div>
         </Menu.Items>
