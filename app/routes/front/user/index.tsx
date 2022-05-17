@@ -13,6 +13,8 @@ import {useState, useEffect} from 'react'
 import {checkAuth} from '~/utils/auth.server'
 import {getUser, updateUser} from '~/api/user.server'
 import {SuccessAlert} from '~/components/alert/success-alert'
+import {TextInput} from '~/components/input/text-input'
+import {AvatarInput} from '~/components/input/avatar-input'
 
 type ActionData = {
   formError?: string
@@ -98,70 +100,23 @@ export default function UserForm() {
               <div className="space-y-6 bg-gray-800 px-4 py-5 shadow-md sm:p-6">
                 <div className="grid grid-cols-3 gap-6">
                   <div className="col-span-3 sm:col-span-2">
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-300"
-                    >
-                      Nombre
-                    </label>
-                    {actionData?.fieldErrors?.name ? (
-                      <p
-                        className="mt-1 text-sm text-red-600"
-                        role="alert"
-                        id="name-error"
-                      >
-                        {actionData?.fieldErrors?.name}
-                      </p>
-                    ) : null}
-                    <div className="mt-1 flex rounded-md shadow-sm">
-                      <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        defaultValue={name}
-                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                      />
-                    </div>
+                    <TextInput
+                      label="Nombre"
+                      name="name"
+                      defaultValue={name}
+                      fieldError={actionData?.fieldErrors?.name}
+                    />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-6">
                   <div className="col-span-3">
-                    <label
-                      htmlFor="imageUrl"
-                      className="block text-sm font-medium text-gray-300"
-                    >
-                      Url de la imagen de perfil
-                    </label>
-                    {actionData?.fieldErrors?.imageUrl ? (
-                      <p
-                        className="mt-1 text-sm text-red-600"
-                        role="alert"
-                        id="name-error"
-                      >
-                        {actionData?.fieldErrors?.imageUrl}
-                      </p>
-                    ) : null}
-                    <div className="mt-1 flex items-center">
-                      <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100">
-                        <svg
-                          className="h-full w-full text-gray-300"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      </span>
-                      <div className="ml-5 mt-1 flex w-full rounded-md shadow-sm">
-                        <input
-                          type="text"
-                          name="imageUrl"
-                          id="imageUrl"
-                          defaultValue={imageUrl}
-                          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                        />
-                      </div>
-                    </div>
+                    <AvatarInput
+                      label="Url de la imagen de perfil"
+                      name="imageUrl"
+                      defaultValue={imageUrl}
+                      fieldError={actionData?.fieldErrors?.imageUrl}
+                    />
                   </div>
                 </div>
               </div>
