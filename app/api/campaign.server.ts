@@ -64,6 +64,6 @@ export const loader: LoaderFunction = async ({request}) => {
 
 export const getCampaigns = async (request: Request): Promise<Campaign[]> => {
   return fetchFromGraphQL(request, getCampaignsQuery).then(
-    responseData => responseData.data.getCampaigns.campaigns,
+    responseData => responseData.getCampaigns.campaigns,
   )
 }

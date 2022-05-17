@@ -27,7 +27,15 @@ export const fetchFromGraphQL = async (
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'POST',
-  }).then(response => response.json())
+  })
+    .then(response => response.json())
+    .then(responseData => {
+      if (responseData.errors) {
+        throw responseData.errors
+      } else {
+        return responseData.data
+      }
+    })
 }
 
 export const gql = String.raw

@@ -8,9 +8,11 @@ import {
   useTransition,
 } from '@remix-run/react'
 import {json} from '@remix-run/node'
+import {useState, useEffect} from 'react'
 
 import {checkAuth} from '~/utils/auth.server'
 import {getUser, updateUser} from '~/api/user.server'
+import {SuccessAlert} from '~/components/alert/success-alert'
 
 type ActionData = {
   formError?: string
@@ -54,7 +56,8 @@ export let action: ActionFunction = async ({
     return {fieldErrors, fields}
   }
 
-  await updateUser(request, fields)
+  const responseData = await updateUser(request, fields)
+  console.log(responseData)
   return {fields}
 }
 
@@ -70,6 +73,7 @@ export default function UserForm() {
   const {user} = useLoaderData<LoaderData>()
   const actionData = useActionData()
   const transition = useTransition()
+  const [success, setSuccess] = useState(false)
 
   const name = actionData?.fields?.name ? actionData?.fields?.name : user.name
   const imageUrl = actionData?.fields?.imageUrl
@@ -78,18 +82,25 @@ export default function UserForm() {
 
   const submiting = transition.state === 'submitting'
 
+  useEffect(() => {
+    const succedded =
+      transition.type === 'actionReload' && transition.state === 'loading'
+    setSuccess(succedded)
+  }, [transition])
+
   return (
     <div className="md:grid md:grid-cols-6 md:gap-6">
       <div className="mx-2 mt-5 md:col-span-4 md:col-start-2 md:mt-0">
+        <SuccessAlert message="Perfil actualizado!" show={success} />
         <Form method="post">
           <fieldset disabled={submiting}>
             <div className="overflow-hidden rounded-md shadow">
-              <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
+              <div className="space-y-6 bg-gray-800 px-4 py-5 shadow-md sm:p-6">
                 <div className="grid grid-cols-3 gap-6">
                   <div className="col-span-3 sm:col-span-2">
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-300"
                     >
                       Nombre
                     </label>
@@ -108,7 +119,7 @@ export default function UserForm() {
                         name="name"
                         id="name"
                         defaultValue={name}
-                        className="block w-full flex-1 rounded-md"
+                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                       />
                     </div>
                   </div>
@@ -118,7 +129,7 @@ export default function UserForm() {
                   <div className="col-span-3">
                     <label
                       htmlFor="imageUrl"
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-300"
                     >
                       Url de la imagen de perfil
                     </label>
@@ -147,17 +158,17 @@ export default function UserForm() {
                           name="imageUrl"
                           id="imageUrl"
                           defaultValue={imageUrl}
-                          className="block w-full flex-1 rounded-md border-gray-300 sm:text-sm"
+                          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+              <div className="bg-gray-700 px-4 py-3 text-right shadow-md sm:px-6">
                 <button
                   type="submit"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className="mr-2 mb-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   {submiting ? 'Actualizando...' : 'Actualizar'}
                 </button>
