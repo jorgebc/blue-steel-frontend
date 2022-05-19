@@ -1,5 +1,7 @@
-import {GRAPHQL_API_URL} from '~/constants/env.server'
+import type {ApolloError} from 'apollo-server-errors'
+
 import {getAccessToken} from './auth.server'
+import {GRAPHQL_API_URL} from '~/constants/env.server'
 
 /**
  * Fetch from GraphQL endpoint
@@ -31,11 +33,25 @@ export const fetchFromGraphQL = async (
     .then(response => response.json())
     .then(responseData => {
       if (responseData.errors) {
-        throw responseData.errors
+        throwError(responseData.errors)
       } else {
         return responseData.data
       }
     })
+}
+
+function throwError(errors: ApolloError) {
+  if (errors.length > 0) {
+    const error = new Error()
+    error.message = 'Backend errors'
+    error.stack = errors.map((err: {message: string}) => err.message).join('\n')
+    throw error
+  } else {
+    const error = new Error()
+    error.message = 'Backend errors'
+    error.stack = JSON.stringify(errors)
+    throw error
+  }
 }
 
 export const gql = String.raw

@@ -1,4 +1,8 @@
-import type {ActionFunction, LoaderFunction} from '@remix-run/node'
+import type {
+  ActionFunction,
+  LoaderFunction,
+  ErrorBoundaryComponent,
+} from '@remix-run/node'
 import type {User} from '~/generated/types'
 
 import {
@@ -15,6 +19,7 @@ import {getUser, updateUser} from '~/api/user.server'
 import {SuccessAlert} from '~/components/alert/success-alert'
 import {TextInput} from '~/components/input/text-input'
 import {AvatarInput} from '~/components/input/avatar-input'
+import {AlertError} from '~/components/error/alert-error-boundary'
 
 type ActionData = {
   formError?: string
@@ -134,4 +139,8 @@ export default function UserForm() {
       </div>
     </div>
   )
+}
+
+export const ErrorBoundary: ErrorBoundaryComponent = ({error}) => {
+  return <AlertError error={error} />
 }

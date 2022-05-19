@@ -21,9 +21,6 @@ export const updateUser = async (
 ): Promise<UserData> => {
   const input = {input: fields}
   return fetchFromGraphQL(request, updateUserMutation, input)
-    .then(responseData => {
-      console.log(responseData)
-      return responseData.updateUser.user
-    })
+    .then(responseData => responseData.updateUser.user)
     .then(user => ({data: {user}}))
 }
