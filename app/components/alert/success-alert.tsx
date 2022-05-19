@@ -1,6 +1,7 @@
+import {useEffect, useState} from 'react'
+
 import {Transition} from '@headlessui/react'
 import Alert from '@reach/alert'
-import {useEffect, useState} from 'react'
 
 export function SuccessAlert({
   message,
@@ -27,9 +28,9 @@ export function SuccessAlert({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <Alert className="mb-4 flex rounded-lg bg-green-100 p-4 text-sm text-green-700 dark:bg-green-200 dark:text-green-800">
+      <Alert className="mb-4 flex rounded-lg  bg-green-200 p-4  text-sm text-green-800">
         <svg
-          className="h-5 w-5 flex-shrink-0 text-green-700 dark:text-green-800"
+          className="h-5 w-5 flex-shrink-0  text-green-800"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +41,7 @@ export function SuccessAlert({
             clipRule="evenodd"
           />
         </svg>
-        <div className="ml-3 text-sm font-medium text-green-700 dark:text-green-800">
+        <div className="ml-3 text-sm font-medium  text-green-800">
           {message}
         </div>
         <button
