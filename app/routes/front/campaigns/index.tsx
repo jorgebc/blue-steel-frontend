@@ -20,6 +20,10 @@ export const loader: LoaderFunction = async ({request}) => {
 
 export default function Campaigns() {
   const {campaigns} = useLoaderData<LoaderData>()
+  const actualCampaign = campaigns.find(campaign => campaign.actual)
+  const noActualCampaign = actualCampaign === undefined
+  const campaignsToShow = campaigns.filter(campaign => !campaign.actual)
+
   return (
     <>
       {campaigns.length === 0 ? (
@@ -27,11 +31,23 @@ export default function Campaigns() {
           <WarningAlert message="No existen campañas" show />
         </div>
       ) : (
-        <div className="m-4 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
-          {campaigns.map(campaign => (
-            <CampaignCard campaign={campaign} key={campaign.id} />
-          ))}
-        </div>
+        <>
+          {noActualCampaign ? (
+            <WarningAlert
+              message="No existe campaña marcada como actual"
+              show
+            />
+          ) : (
+            <div className="m-4 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
+              <CampaignCard campaign={actualCampaign} />
+            </div>
+          )}
+          <div className="m-4 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
+            {campaignsToShow.map(campaign => (
+              <CampaignCard campaign={campaign} key={campaign.id} />
+            ))}
+          </div>
+        </>
       )}
     </>
   )
