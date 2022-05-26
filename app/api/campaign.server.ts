@@ -13,6 +13,7 @@ const getCampaignsQuery = gql`
         name
         description
         imageUrl
+        actual
         summaries {
           id
           name

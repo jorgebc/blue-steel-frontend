@@ -10,23 +10,32 @@ import {AlertError} from '~/components/error/alert-error-boundary'
 import {CampaignCard} from '~/components/front/card/campaign'
 import {WarningAlert} from '~/components/alert/warning-alert'
 
-type LoaderData = {campaigns: Campaign[]}
+type LoaderData = {
+  campaigns: Campaign[]
+  actualCampaign?: Campaign
+  noActualCampaign: boolean
+}
 
 export const loader: LoaderFunction = async ({request}) => {
   checkAuth(request)
   const campaigns = await getCampaigns(request)
-  return json<LoaderData>({campaigns})
-}
-
-export default function Campaigns() {
-  const {campaigns} = useLoaderData<LoaderData>()
   const actualCampaign = campaigns.find(campaign => campaign.actual)
   const noActualCampaign = actualCampaign === undefined
   const campaignsToShow = campaigns.filter(campaign => !campaign.actual)
+  return json<LoaderData>({
+    campaigns: campaignsToShow,
+    actualCampaign,
+    noActualCampaign,
+  })
+}
+
+export default function Campaigns() {
+  const {campaigns, actualCampaign, noActualCampaign} =
+    useLoaderData<LoaderData>()
 
   return (
     <>
-      {campaigns.length === 0 ? (
+      {campaigns.length === 0 && noActualCampaign ? (
         <div className="mx-2 mt-5 md:col-span-4 md:col-start-2 md:mt-0">
           <WarningAlert message="No existen campañas" show />
         </div>
@@ -38,12 +47,12 @@ export default function Campaigns() {
               show
             />
           ) : (
-            <div className="m-4 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
+            <div className="m-4 grid grid-cols-1">
               <CampaignCard campaign={actualCampaign} />
             </div>
           )}
           <div className="m-4 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
-            {campaignsToShow.map(campaign => (
+            {campaigns.map(campaign => (
               <CampaignCard campaign={campaign} key={campaign.id} />
             ))}
           </div>
