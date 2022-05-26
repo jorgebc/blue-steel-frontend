@@ -5,7 +5,7 @@ import Alert from '@reach/alert'
 
 export function SuccessAlert({
   message,
-  show = true,
+  show = false,
 }: {
   message: string
   show?: boolean

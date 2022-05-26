@@ -12,7 +12,6 @@ import {
   useTransition,
 } from '@remix-run/react'
 import {json} from '@remix-run/node'
-import {useState, useEffect} from 'react'
 
 import {checkAuth} from '~/utils/auth.server'
 import {getUser, updateUser} from '~/api/user.server'
@@ -28,6 +27,7 @@ type ActionData = {
     name: string
     imageUrl: string
   }
+  success?: boolean
 }
 
 function validateUserName(name: string) {
@@ -60,12 +60,12 @@ export let action: ActionFunction = async ({
   }
   const fields = {name, imageUrl}
   if (Object.values(fieldErrors).some(Boolean)) {
-    return {fieldErrors, fields}
+    return {fieldErrors, fields, success: false}
   }
 
   const responseData = await updateUser(request, fields)
   console.log(responseData)
-  return {fields}
+  return {fields, success: true}
 }
 
 type LoaderData = {user: User}
@@ -80,7 +80,6 @@ export default function UserForm() {
   const {user} = useLoaderData<LoaderData>()
   const actionData = useActionData()
   const transition = useTransition()
-  const [success, setSuccess] = useState(false)
 
   const name = actionData?.fields?.name ? actionData?.fields?.name : user.name
   const imageUrl = actionData?.fields?.imageUrl
@@ -89,16 +88,13 @@ export default function UserForm() {
 
   const submiting = transition.state === 'submitting'
 
-  useEffect(() => {
-    const succedded =
-      transition.type === 'actionReload' && transition.state === 'loading'
-    setSuccess(succedded)
-  }, [transition])
-
   return (
     <div className="md:grid md:grid-cols-6 md:gap-6">
       <div className="mx-2 mt-5 md:col-span-4 md:col-start-2 md:mt-0">
-        <SuccessAlert message="Perfil actualizado!" show={success} />
+        <SuccessAlert
+          message="Perfil actualizado!"
+          show={actionData?.success}
+        />
         <Form method="post">
           <fieldset disabled={submiting}>
             <div className="overflow-hidden rounded-md shadow">
