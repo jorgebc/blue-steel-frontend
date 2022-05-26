@@ -8,6 +8,7 @@ import {checkAuth} from '~/utils/auth.server'
 import {getCampaigns} from '~/api/campaign.server'
 import {AlertError} from '~/components/error/alert-error-boundary'
 import {CampaignCard} from '~/components/front/card/campaign'
+import {WarningAlert} from '~/components/alert/warning-alert'
 
 type LoaderData = {campaigns: Campaign[]}
 
@@ -20,11 +21,19 @@ export const loader: LoaderFunction = async ({request}) => {
 export default function Campaigns() {
   const {campaigns} = useLoaderData<LoaderData>()
   return (
-    <div className="m-4 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
-      {campaigns.map(campaign => (
-        <CampaignCard campaign={campaign} key={campaign.id} />
-      ))}
-    </div>
+    <>
+      {campaigns.length === 0 ? (
+        <div className="mx-2 mt-5 md:col-span-4 md:col-start-2 md:mt-0">
+          <WarningAlert message="No existen campañas" show />
+        </div>
+      ) : (
+        <div className="m-4 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2">
+          {campaigns.map(campaign => (
+            <CampaignCard campaign={campaign} key={campaign.id} />
+          ))}
+        </div>
+      )}
+    </>
   )
 }
 
