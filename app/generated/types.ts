@@ -18,6 +18,21 @@ export type Scalars = {
   UUID: any;
 };
 
+export type Activity = {
+  __typename?: 'Activity';
+  description: Scalars['String'];
+  id: Scalars['UUID'];
+  lastModifiedBy: User;
+  lastModifiedDate: Scalars['LocalDateTime'];
+  name: Scalars['String'];
+  type: ActivityType;
+};
+
+export enum ActivityType {
+  Campaign = 'CAMPAIGN',
+  Summary = 'SUMMARY'
+}
+
 export type AuditMetadata = {
   __typename?: 'AuditMetadata';
   createdBy: User;
@@ -98,9 +113,19 @@ export type GetCampaignsPayload = {
   campaigns: Maybe<Array<Maybe<Campaign>>>;
 };
 
+export type GetLastActivityPayload = {
+  __typename?: 'GetLastActivityPayload';
+  lastActivities: Maybe<Array<Maybe<Activity>>>;
+};
+
 export type GetSummaryPayload = {
   __typename?: 'GetSummaryPayload';
   summary: Summary;
+};
+
+export type GetUserPayload = {
+  __typename?: 'GetUserPayload';
+  user: User;
 };
 
 export type Mutation = {
@@ -112,6 +137,7 @@ export type Mutation = {
   setActualCampaign: SetActualCampaignPayload;
   updateCampaign: UpdateCampaignPayload;
   updateCampaignSummary: UpdateCampaignSummaryPayload;
+  updateUser: UpdateUserPayload;
 };
 
 
@@ -149,12 +175,19 @@ export type MutationUpdateCampaignSummaryArgs = {
   input: UpdateCampaignSummaryInput;
 };
 
+
+export type MutationUpdateUserArgs = {
+  input: InputMaybe<UpdateUserInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getActualCampaign: GetActualCampaignPayload;
   getCampaign: GetCampaignPayload;
   getCampaigns: GetCampaignsPayload;
+  getLastActivities: GetLastActivityPayload;
   getSummary: GetSummaryPayload;
+  getUser: GetUserPayload;
 };
 
 
@@ -209,8 +242,18 @@ export type UpdateCampaignSummaryPayload = {
   summary: Summary;
 };
 
+export type UpdateUserInput = {
+  imageUrl: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type UpdateUserPayload = {
+  __typename?: 'UpdateUserPayload';
+  user: User;
+};
+
 export type User = {
   __typename?: 'User';
-  id: Scalars['String'];
+  imageUrl: Maybe<Scalars['String']>;
   name: Scalars['String'];
 };

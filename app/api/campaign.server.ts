@@ -18,26 +18,14 @@ const getCampaignsQuery = gql`
           name
           description
           gameDate
-          campaign {
-            id
-            name
-            description
-            imageUrl
-            actual
-            auditingMetadata {
-              creationDate
-              lastModifiedDate
-            }
-            version
-          }
           auditingMetadata {
             createdBy {
-              id
               name
+              imageUrl
             }
             lastModifiedBy {
-              id
               name
+              imageUrl
             }
             creationDate
             lastModifiedDate
@@ -46,12 +34,12 @@ const getCampaignsQuery = gql`
         }
         auditingMetadata {
           createdBy {
-            id
             name
+            imageUrl
           }
           lastModifiedBy {
-            id
             name
+            imageUrl
           }
           creationDate
           lastModifiedDate
@@ -76,6 +64,6 @@ export const loader: LoaderFunction = async ({request}) => {
 
 export const getCampaigns = async (request: Request): Promise<Campaign[]> => {
   return fetchFromGraphQL(request, getCampaignsQuery).then(
-    responseData => responseData.data.getCampaigns.campaigns,
+    responseData => responseData.getCampaigns.campaigns,
   )
 }

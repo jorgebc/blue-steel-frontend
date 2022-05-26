@@ -8,7 +8,7 @@ import {Tooltip} from '~/components/tooltip'
 
 export function CampaignCard({campaign}: {campaign: Campaign}) {
   return (
-    <div className="mx-auto max-w-2xl overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-800">
+    <div className="mx-auto max-w-2xl overflow-hidden rounded-lg bg-gray-800 shadow-md">
       <img
         className="h-64 w-full object-cover"
         src={campaign.imageUrl}
@@ -47,8 +47,8 @@ export function CampaignCard({campaign}: {campaign: Campaign}) {
             <div className="flex items-center">
               <div className="flex items-center">
                 <img
-                  className="h-10 rounded-full object-cover"
-                  src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
+                  className="h-10 w-10 rounded-full"
+                  src={campaign.auditingMetadata.lastModifiedBy.imageUrl}
                   alt="Avatar"
                 />
                 <span className="mx-2 font-semibold text-gray-500">
