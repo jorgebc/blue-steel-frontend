@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import {Transition} from '@headlessui/react'
 import Alert from '@reach/alert'
 
-export function SuccessAlert({
+export function WarningAlert({
   message,
   show = false,
 }: {
@@ -28,9 +28,9 @@ export function SuccessAlert({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <Alert className="mb-4 flex rounded-lg  bg-green-200 p-4  text-sm text-green-800">
+      <Alert className="mb-4 flex rounded-lg  bg-yellow-200 p-4  text-sm text-yellow-800">
         <svg
-          className="h-5 w-5 flex-shrink-0  text-green-800"
+          className="h-5 w-5 flex-shrink-0  text-yellow-800"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -41,12 +41,12 @@ export function SuccessAlert({
             clipRule="evenodd"
           />
         </svg>
-        <div className="ml-3 text-sm font-medium  text-green-800">
+        <div className="ml-3 text-sm font-medium  text-yellow-800">
           {message}
         </div>
         <button
           type="button"
-          className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-green-200 p-1.5 text-green-600 hover:bg-green-300 focus:ring-2 focus:ring-green-400"
+          className="-mx-1.5 -my-1.5 ml-auto inline-flex h-8 w-8 rounded-lg bg-yellow-200 p-1.5 text-yellow-600 ring-yellow-400 hover:bg-yellow-300 focus:ring-2"
           aria-label="Cerrar"
           onClick={dismiss}
         >
