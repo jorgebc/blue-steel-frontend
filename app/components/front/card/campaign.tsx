@@ -7,7 +7,6 @@ import {toLocalDateTime} from '~/utils/date'
 import {Tooltip} from '~/components/tooltip'
 
 export function CampaignCard({campaign}: {campaign: Campaign}) {
-  console.log(campaign.actual)
   return (
     <div className="mx-auto max-w-2xl overflow-hidden rounded-lg bg-gray-800 shadow-md">
       <img
