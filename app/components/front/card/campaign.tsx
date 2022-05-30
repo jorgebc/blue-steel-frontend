@@ -7,6 +7,7 @@ import {toLocalDateTime} from '~/utils/date'
 import {Tooltip} from '~/components/tooltip'
 
 export function CampaignCard({campaign}: {campaign: Campaign}) {
+  console.log(campaign.actual)
   return (
     <div className="mx-auto max-w-2xl overflow-hidden rounded-lg bg-gray-800 shadow-md">
       <img
@@ -16,31 +17,32 @@ export function CampaignCard({campaign}: {campaign: Campaign}) {
       />
 
       <div className="p-6 hover:opacity-75">
-        <div>
-          <a
-            href={`campaigns/${campaign.id}`}
-            className="mt-2 mb-2 block transform text-2xl font-semibold text-white transition-colors duration-200 hover:text-gray-600 hover:underline"
+        <a
+          href={`campaigns/${campaign.id}`}
+          className="mt-2 block transform text-2xl font-semibold text-white transition-colors duration-200 hover:text-gray-600 hover:underline"
+        >
+          {campaign.name}
+        </a>
+        {campaign.actual && (
+          <div className="text-xs text-gray-400">Campaña actual</div>
+        )}
+        <div className="mt-2 text-sm text-gray-300">
+          <ShowMoreText
+            lines={3}
+            more="Mostrar más"
+            less="Mostrar menos"
+            className="content-css"
+            anchorClass="text-blue-500"
+            expanded={false}
+            truncatedEndingComponent={'... '}
           >
-            {campaign.name}
-          </a>
-          <span className="mt-2 text-sm text-gray-300">
-            <ShowMoreText
-              lines={3}
-              more="Mostrar más"
-              less="Mostrar menos"
-              className="content-css"
-              anchorClass="text-blue-500"
-              expanded={false}
-              truncatedEndingComponent={'... '}
-            >
-              {parse(campaign.description)}
-            </ShowMoreText>
-          </span>
+            {parse(campaign.description)}
+          </ShowMoreText>
         </div>
 
-        <span className="mt-2 text-xs text-gray-400">
+        <div className="mt-2 text-xs text-gray-400">
           Número de resumenes: {campaign.summaries?.length}
-        </span>
+        </div>
 
         <div className="mt-2">
           <Tooltip message="Última modificación">
