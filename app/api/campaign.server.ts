@@ -3,53 +3,8 @@ import type {ApolloError} from 'apollo-server-errors'
 import type {Campaign} from '~/generated/types'
 
 import {json} from '@remix-run/node'
-import {fetchFromGraphQL, gql} from '~/utils/fetchFromGraphql.server'
-
-const getCampaignsQuery = gql`
-  query GetCampaigns {
-    getCampaigns {
-      campaigns {
-        id
-        name
-        description
-        imageUrl
-        actual
-        summaries {
-          id
-          name
-          description
-          gameDate
-          auditingMetadata {
-            createdBy {
-              name
-              imageUrl
-            }
-            lastModifiedBy {
-              name
-              imageUrl
-            }
-            creationDate
-            lastModifiedDate
-          }
-          version
-        }
-        auditingMetadata {
-          createdBy {
-            name
-            imageUrl
-          }
-          lastModifiedBy {
-            name
-            imageUrl
-          }
-          creationDate
-          lastModifiedDate
-        }
-        version
-      }
-    }
-  }
-`
+import {fetchFromGraphQL} from '~/utils/fetchFromGraphql.server'
+import {getCampaignsQuery} from './queries/campaign-queries.server'
 
 export type LoaderData = {
   data: {campaigns: Campaign[]}
