@@ -37,3 +37,5 @@ export const SECRETS = isProduction()
 export const GRAPHQL_API_URL = isProduction()
   ? process.env.GRAPHQL_API_URL!
   : 'http://localhost:8080/graphql'
+
+export const FETCH_TIMEOUT = 9500

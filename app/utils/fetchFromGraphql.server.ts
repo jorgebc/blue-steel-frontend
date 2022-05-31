@@ -1,7 +1,7 @@
 import type {ApolloError} from 'apollo-server-errors'
 
 import {getAccessToken} from './auth.server'
-import {GRAPHQL_API_URL} from '~/constants/env.server'
+import {GRAPHQL_API_URL, FETCH_TIMEOUT} from '~/constants/env.server'
 
 /**
  * Fetch from GraphQL endpoint
@@ -22,6 +22,11 @@ export const fetchFromGraphQL = async (
   const body: any = {query}
   if (variables) body.variables = variables
 
+  const controller = new AbortController()
+  const signal = controller.signal
+
+  setTimeout(() => controller.abort(), FETCH_TIMEOUT)
+
   return fetch(GRAPHQL_API_URL, {
     body: JSON.stringify(body),
     headers: {
@@ -29,6 +34,7 @@ export const fetchFromGraphQL = async (
       Authorization: `Bearer ${accessToken}`,
     },
     method: 'POST',
+    signal,
   })
     .then(response => response.json())
     .then(responseData => {
